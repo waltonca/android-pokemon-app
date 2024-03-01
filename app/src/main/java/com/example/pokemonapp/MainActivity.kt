@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
         val pokemon by mainViewModel.pokemonStateFlow.collectAsState()
 
         val pokemonName = pokemon?.name
-        val pokemonType = pokemon?.types?.type
+
         val pokemonHeight = pokemon?.height
         val pokemonWeight = pokemon?.weight
 
@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity() {
                     ),
                     title = {
                         // Current location
-                        Text("${pokemonName}, ${pokemonType?.name}, ${pokemonWeight}, ${pokemonHeight}",
+                        Text("${pokemonName},  ${pokemonWeight}, ${pokemonHeight}",
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis)
                     }
