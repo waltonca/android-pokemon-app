@@ -140,7 +140,9 @@ class MainActivity : ComponentActivity() {
 
                         Button(
                             onClick = {
-                                mainViewModel.updatePokemon(textFieldPokemonName)
+                                //name should be lowerCase
+                                val lowercasePokemonName = textFieldPokemonName.lowercase()
+                                mainViewModel.updatePokemon(lowercasePokemonName)
                             },
                             modifier = Modifier.padding(start = 8.dp)
                         ) {
