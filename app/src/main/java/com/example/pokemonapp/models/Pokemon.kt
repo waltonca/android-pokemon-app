@@ -2,14 +2,19 @@ package com.example.pokemonapp.models
 
 data class Pokemon (
     val name: String,
-    //val types: Types,
+    val types: List<TypeItem>,
     val height: Float,
     val weight: Float,
     val sprites: Sprites
 )
-/*
-data class Types (
-    val type: List<Type>
+
+data class Sprites (
+    val front_default: String
+)
+
+data class TypeItem (
+    val slot: Int,
+    val type: Type
 )
 
 data class Type (
@@ -17,7 +22,3 @@ data class Type (
     val url: String
 )
 
-*/
-data class Sprites (
-    val front_default: String
-)
