@@ -2,6 +2,7 @@ package com.example.pokemonapp
 
 import android.net.http.HttpException
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,10 +22,16 @@ class MainViewModel : ViewModel() {
 
     fun updatePokemon(pokemonName: String) {
         viewModelScope.launch {
-            val pokemon = APIClient.apiService.getPokemonByName(pokemonName)
-            // Update ViewModel state
-            _pokemonStateFlow.value = pokemon
+            // Add some code to check whether the response is correct
+            try {
+                val pokemon = APIClient.apiService.getPokemonByName(pokemonName)
+                _pokemonStateFlow.value = pokemon
+            } catch (e: Exception){
+                // Network Problem
+                e.printStackTrace()
+                Log.i("testing" ,e.toString())
 
+            }
         }
     }
 

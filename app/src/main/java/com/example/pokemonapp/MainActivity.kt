@@ -36,12 +36,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.pokemonapp.models.Pokemon
 import com.example.pokemonapp.ui.theme.PokemonAppTheme
 import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var mainViewModel: MainViewModel
+
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class MainActivity : ComponentActivity() {
         mainViewModel = MainViewModel()
 
         // Load the pokemon from API
-        mainViewModel.updatePokemon("pikachu")
+        mainViewModel.updatePokemon("pikachu2222s")
 
         setContent {
             PokemonAppTheme {
@@ -68,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun DisplayCurrentPokemon(){
+    fun DisplayCurrentPokemon() {
         //
         // Get pokemon from ViewModel, and the UI will re-compose when ViewModel changes or pokemon data is loaded
         //
@@ -78,10 +80,12 @@ class MainActivity : ComponentActivity() {
         val pokemonName = pokemon?.name
         val pokemonHeight = pokemon?.height
         val pokemonWeight = pokemon?.weight
+
         // pokemonTypes can have 1 type or more than 1 types
-        val pokemonTypes:List<String>? = pokemon?.types?.map { it.type.name }
+        val pokemonTypes: List<String>? = pokemon?.types?.map { it.type.name }
         // I need put them together in one string.
         val pokemonTypesString: String = pokemonTypes?.joinToString(", ") ?: "Unknown"
+
         //
         // Render UI
         //
@@ -99,10 +103,10 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-            ){
+            ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     // Logo of pokomon
                     Box(
                         modifier = Modifier
@@ -150,36 +154,49 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
+                    // Add a condition statement here
+                    // Only the right pokemon name render the following UI
+                    // I should put bellow into a function
 
-                    // pokemon icon (using Coil)
-                    val imgUrl = pokemon?.sprites?.front_default
-                    AsyncImage(
-                        model = imgUrl,
-                        contentDescription = "Current pokemon image",
-                        modifier = Modifier.size(128.dp))
+                    if (pokemon != null){
+                        // pokemon icon (using Coil)
+                        val imgUrl = pokemon?.sprites?.front_default
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = "Current pokemon image",
+                            modifier = Modifier.size(128.dp)
+                        )
 
-                    // pikachu
-                    Text(pokemonName.toString(),
-                        fontSize = 40.sp)
+                        // pikachu
+                        Text(
+                            pokemonName.toString(),
+                            fontSize = 40.sp
+                        )
 
-                    // Types: electric
-                    Text("Types: " + pokemonTypesString,
-                        fontSize = 30.sp)
+                        // Types: electric
+                        Text(
+                            "Types: " + pokemonTypesString,
+                            fontSize = 30.sp
+                        )
 
-                    // Height: 4ft
-                    Text("Height: ${pokemonHeight?.roundToInt()}ft",
-                        fontSize = 20.sp)
+                        // Height: 4ft
+                        Text(
+                            "Height: ${pokemonHeight?.roundToInt()}ft",
+                            fontSize = 20.sp
+                        )
 
-                    // Weight: 60lbs
-                    Text("Weight: ${pokemonWeight?.roundToInt()}lbs",
-                        fontSize = 20.sp)
-
+                        // Weight: 60lbs
+                        Text(
+                            "Weight: ${pokemonWeight?.roundToInt()}lbs",
+                            fontSize = 20.sp
+                        )
+                    } else {
+                       Text(text = "Not found")
+                    }
 
                 }
             }
         }
     }
-
-
 }
 
