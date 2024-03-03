@@ -62,7 +62,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     DisplayCurrentPokemon()
-
                 }
             }
         }
@@ -72,22 +71,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun DisplayCurrentPokemon() {
         //
-        // Get pokemon from ViewModel, and the UI will re-compose when ViewModel changes or pokemon data is loaded
-        //
-
-        val pokemon by mainViewModel.pokemonStateFlow.collectAsState()
-
-        val pokemonName = pokemon?.name
-        val pokemonHeight = pokemon?.height
-        val pokemonWeight = pokemon?.weight
-
-        // pokemonTypes can have 1 type or more than 1 types
-        val pokemonTypes: List<String>? = pokemon?.types?.map { it.type.name }
-        // I need put them together in one string.
-        val pokemonTypesString: String = pokemonTypes?.joinToString(", ") ?: "Unknown"
-
-        //
-        // Render UI
+        // Render Main UI Part
         //
 
         var textFieldPokemonName by remember { mutableStateOf("") }
@@ -154,11 +138,27 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    // Add a condition statement here
-                    // Only the right pokemon name render the following UI
-                    // I should put bellow into a function
+                    //
+                    // If the right pokemon name, render the following UI
+                    //
+
+                    //
+                    // Get pokemon from ViewModel, and the UI will re-compose when ViewModel changes or pokemon data is loaded
+                    //
+
+                    val pokemon by mainViewModel.pokemonStateFlow.collectAsState()
 
                     if (pokemon != null){
+
+                        val pokemonName = pokemon?.name
+                        val pokemonHeight = pokemon?.height
+                        val pokemonWeight = pokemon?.weight
+
+                        // pokemonTypes can have 1 type or more than 1 types
+                        val pokemonTypes: List<String>? = pokemon?.types?.map { it.type.name }
+                        // I need put them together in one string.
+                        val pokemonTypesString: String = pokemonTypes?.joinToString(", ") ?: "Unknown"
+
                         // pokemon icon (using Coil)
                         val imgUrl = pokemon?.sprites?.front_default
                         AsyncImage(
@@ -191,6 +191,7 @@ class MainActivity : ComponentActivity() {
                             fontSize = 20.sp
                         )
                     } else {
+
                        Text(text = "Not found")
                     }
 
