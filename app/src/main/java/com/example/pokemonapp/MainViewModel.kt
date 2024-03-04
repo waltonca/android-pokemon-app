@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
             try {
                 val pokemon = APIClient.apiService.getPokemonByName(pokemonName)
                 _pokemonStateFlow.value = pokemon
-                Log.i("testing" , _pokemonStateFlow.toString())
+                Log.i("testing" , _pokemonStateFlow.value.toString())
             } catch (e: HttpException){
 //                // Network Problem
 //                e.printStackTrace()
@@ -35,10 +35,12 @@ class MainViewModel : ViewModel() {
 //                // Try log pokemon
 //                Log.i("testing" , _pokemonStateFlow.toString())
 //                // Maybe I can try try pokemon here.
-//                val pokemon = null
+//                val pokemon = nu
                 if (e.code() == 404) {
                     // HTTP 404
+                    Log.i("testing-b" , _pokemonStateFlow.value.toString())
                     _pokemonStateFlow.value = null
+                    Log.i("testing-a" , _pokemonStateFlow.value.toString())
                 } else {
                 }
             } catch (e: Exception) {
