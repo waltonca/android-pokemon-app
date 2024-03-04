@@ -148,7 +148,10 @@ class MainActivity : ComponentActivity() {
 
                     val pokemon by mainViewModel.pokemonStateFlow.collectAsState()
 
-                    if (pokemon != null){
+                    if (pokemon == null) {
+                        Text(text = "Not found")
+
+                    } else {
 
                         val pokemonName = pokemon?.name
                         val pokemonHeight = pokemon?.height
@@ -190,9 +193,9 @@ class MainActivity : ComponentActivity() {
                             "Weight: ${pokemonWeight?.roundToInt()}lbs",
                             fontSize = 20.sp
                         )
-                    } else {
 
-                       Text(text = "Not found")
+                        // Set the state
+                        // pokemonState = null
                     }
 
                 }

@@ -1,6 +1,5 @@
 package com.example.pokemonapp
 
-import android.net.http.HttpException
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
+import retrofit2.HttpException
 
 class MainViewModel : ViewModel() {
 
@@ -27,11 +27,22 @@ class MainViewModel : ViewModel() {
             try {
                 val pokemon = APIClient.apiService.getPokemonByName(pokemonName)
                 _pokemonStateFlow.value = pokemon
-            } catch (e: Exception){
-                // Network Problem
-                e.printStackTrace()
-                Log.i("testing" ,e.toString())
-
+                Log.i("testing" , _pokemonStateFlow.toString())
+            } catch (e: HttpException){
+//                // Network Problem
+//                e.printStackTrace()
+//                Log.i("testing" ,e.toString())
+//                // Try log pokemon
+//                Log.i("testing" , _pokemonStateFlow.toString())
+//                // Maybe I can try try pokemon here.
+//                val pokemon = null
+                if (e.code() == 404) {
+                    // HTTP 404
+                    _pokemonStateFlow.value = null
+                } else {
+                }
+            } catch (e: Exception) {
+                // other exception
             }
         }
     }
